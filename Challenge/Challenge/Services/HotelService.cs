@@ -23,13 +23,13 @@ namespace Challenge.Services
             // TODO: pendiente de pasar los parámetros para la inyección de dependencias
             var hoteles = await _hotelRepository.GetHotels();
 
-            foreach (var iterator in hoteles)
+            foreach (var hotel in hoteles)
             {
-                for (int i = 0; i < iterator.rates.Length; i++)
+                for (int i = 0; i < hotel.rates.Length; i++)
                 {
-                    if (iterator.rates[i].rateTypeBool)
+                    if (hotel.rates[i].rateTypeBool)
                     {         //rateTypeBool es true cuando la reserva es por noche
-                        iterator.rates[i].value = Nights * iterator.rates[i].value;
+                        hotel.rates[i].value = Nights * hotel.rates[i].value;
                     }
                 }
             }
