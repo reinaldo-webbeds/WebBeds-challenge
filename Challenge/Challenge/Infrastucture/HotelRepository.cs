@@ -28,8 +28,8 @@ namespace Challenge.Infrastucture
             }
             catch (Exception e)
             {
-                //Tratar error por si la llamada no funciona
-                return null;
+                
+                return new List<Record>();
             }
         }
 
