@@ -19,12 +19,6 @@ namespace Challenge.Infrastucture
             _http = new HttpClient();
         }
 
-        // TODO: delete after 
-        //public HotelRepository()
-        //{
-
-        //}
-
         public async Task<List<Record>> GetHotels()
         {
             try
