@@ -1,3 +1,5 @@
+using Challenge.Infrastucture;
+using Challenge.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +21,8 @@ namespace Challenge
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddTransient<IHotelService, HotelService>();
+            services.AddTransient<IHotelRepository, HotelRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
