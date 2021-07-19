@@ -23,6 +23,7 @@ namespace Challenge
         {
             services.AddTransient<IHotelService, HotelService>();
             services.AddTransient<IHotelRepository, HotelRepository>();
+            services.AddHttpClient();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

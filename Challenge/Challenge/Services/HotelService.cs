@@ -18,10 +18,9 @@ namespace Challenge.Services
             _hotelRepository = hotelRepository;
         }
 
-        public async Task<List<Record>> GetHotels()
+        public async Task<List<Record>> GetHotels(int nights, int destinationId)
         {
-            // TODO: pendiente de pasar los parámetros para la inyección de dependencias
-            var hoteles = await _hotelRepository.GetHotels();
+            var hoteles = await _hotelRepository.GetHotels(nights, destinationId);
 
             foreach (var hotel in hoteles)
             {

@@ -6,6 +6,6 @@ namespace Challenge.Services
 {
     public interface IHotelService
     {
-        Task<List<Record>> GetHotels();
+        Task<List<Record>> GetHotels(int nights, int destinationId);
     }
 }

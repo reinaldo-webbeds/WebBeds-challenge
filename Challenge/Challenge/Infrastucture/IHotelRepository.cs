@@ -6,6 +6,6 @@ namespace Challenge.Infrastucture
 {
     public interface IHotelRepository
     {
-        Task<List<Record>> GetHotels();
+        Task<List<Record>> GetHotels(int nights, int destinationId);
     }
 }

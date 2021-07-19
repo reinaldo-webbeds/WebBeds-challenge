@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using PruebaApi.Models;
 using System;
 using System.Collections.Generic;
@@ -11,27 +12,39 @@ namespace Challenge.Infrastucture
     public class HotelRepository : IHotelRepository
     {
 
-        private string _url = "https://webbedsdevtest.azurewebsites.net/api/findBargain?destinationId=279&nights=3&code=aWH1EX7ladA8C/oWJX5nVLoEa4XKz2a64yaWVvzioNYcEo8Le8caJw==";
-        private HttpClient _http;
-        public HotelRepository()
+        private string _url;
+        private static IHttpClientFactory _clientFactory;
+        private readonly IConfiguration _configuration;
+        public HotelRepository(IHttpClientFactory clientFactory, IConfiguration configuration)
         {
-            // TODO: usar httpclient factory
-            _http = new HttpClient();
+            _clientFactory = clientFactory;
+            _configuration = configuration;
         }
 
-        public async Task<List<Record>> GetHotels()
+        public async Task<List<Record>> GetHotels(int nights, int destinationId)
         {
-            try
+            var client = _clientFactory.CreateClient();
+            var baseUrl = _configuration["URLCheapAwesomeApi"];
+            var token = _configuration["Token"];
+
+            if (String.IsNullOrEmpty(baseUrl) || String.IsNullOrEmpty(token))
             {
-                var response = await _http.GetStringAsync(_url);
-                return JsonConvert.DeserializeObject<List<Record>>(response);
+                // raise exception
             }
-            catch (Exception e)
+
+            _url = $"{baseUrl}?destinationId={destinationId}&nights={nights}&code={token}";
+
+            var response = await client.GetAsync(_url);
+
+            if (response.IsSuccessStatusCode)
             {
-                
-                return new List<Record>();
+                return JsonConvert.DeserializeObject<List<Record>>(await response.Content.ReadAsStringAsync());
             }
+
+            return new List<Record>();
+
         }
 
     }
+
 }
